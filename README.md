@@ -7,4 +7,5 @@
 ## WASM
 
 - [WebAssembly Concepts](https://developer.mozilla.org/en-US/docs/WebAssembly/Concepts)
-- [Porting from c/c++](https://developer.mozilla.org/en-US/docs/WebAssembly/Concepts#porting_from_cc)
+- [emscripten](https://emscripten.org/)
+  - install cmake using `brew install cmake`
