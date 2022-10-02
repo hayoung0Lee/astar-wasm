@@ -1,0 +1,27 @@
+#ifndef MAP_MANAGER_H
+#define MAP_MANAGER_H
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class MapManager
+{
+private:
+    int r;
+    int c;
+    vector<vector<int>> m;
+
+public:
+    MapManager(int row, int col);
+    MapManager();
+    ~MapManager();
+    void addObstacle(int x, int y);
+    void removeObstacle(int x, int y);
+    void printMap() const;
+    int getRowSize() const;
+    int getColSize() const;
+    const vector<vector<int>> &getMap() const;
+};
+
+#endif
