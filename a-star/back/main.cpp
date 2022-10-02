@@ -1,5 +1,5 @@
 #include <iostream>
-// #include <emscripten/emscripten.h>
+#include <emscripten/emscripten.h>
 // #include <string.h>
 // #include <cstdlib>
 #include "map_manager.h"
@@ -19,5 +19,5 @@ int main(int argc, char **argv)
   AstarPathFinder astar(curMap.getMap());
   astar.getResult(true);
 
-  cout << "hello" << endl;
+  cout << "hello is it printed? " << endl;
 }
