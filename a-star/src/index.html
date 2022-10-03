@@ -8,19 +8,22 @@
 </head>
 <body>
     Hello
+
+    <script src="./map_manager.js">
+        console.log("loaded")
+    </script>
+
     <script>
         console.log("test")
-         var Module = {
-            onRuntimeInitialized: function() {
-                console.log("test")
-                var instance = new Module.MapManager(4, 4);
-                console.log("test", instance.getMap());
-            }
+        Module.onRuntimeInitialized = _ => {
+            const c = new Module.MapManager(10, 10);
+            c.addObstacle(2, 4);
+            c.addObstacle(4, 4);
+            const m = c.getMap().get(0).get(0);
         };
-
     </script>
-    <script src="./MapManager.js"></script>
-    <!-- <script type="text/javascript" src="./MapManager.wasm"></script> -->
+
 
 </body>
 </html>
+
