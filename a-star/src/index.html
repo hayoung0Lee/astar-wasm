@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Hello
+    <script>
+        console.log("test")
+         var Module = {
+            onRuntimeInitialized: function() {
+                console.log("test")
+                var instance = new Module.MapManager(4, 4);
+                console.log("test", instance.getMap());
+            }
+        };
+
+    </script>
+    <script src="./MapManager.js"></script>
+    <!-- <script type="text/javascript" src="./MapManager.wasm"></script> -->
+
+</body>
+</html>

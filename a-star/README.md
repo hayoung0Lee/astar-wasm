@@ -11,3 +11,9 @@
 - vector usage: https://blockdmask.tistory.com/70
 
 - https://www.telerik.com/blogs/using-webassembly-with-react
+
+- update: https://stackoverflow.com/questions/63280109/how-to-update-webpack-config-for-a-react-project-created-using-create-react-app
+
+- exmaple: https://github.com/gupnik/WebAssemblyReact/tree/master/Part%20I
+
+- https://neoquest.xyz/blog/c++-to-webassembly-with-react-from-scratch
