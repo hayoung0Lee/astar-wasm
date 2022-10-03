@@ -9,3 +9,5 @@
 - Clang formatter: https://yoonbh2714.blogspot.com/2016/12/vscode-c-formatting_15.html
 
 - vector usage: https://blockdmask.tistory.com/70
+
+- https://www.telerik.com/blogs/using-webassembly-with-react
