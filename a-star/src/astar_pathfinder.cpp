@@ -134,3 +134,25 @@ const vector<NodeWeight> &AstarPathFinder::getResult(bool cleanMode)
 
     return path;
 }
+
+// EMSCRIPTEN_BINDINGS(stl_wrappers)
+// {
+//     // emscripten::register_vector<int>("VectorInt");
+//     // emscripten::register_vector<vector<int>>("VectorVectorInt");
+
+//     value_object<NodeWeight>("NodeWeight")
+//         .field("id", &NodeWeight::id)
+//         .field("fScore", &NodeWeight::fScore)
+//         .field("gScore", &NodeWeight::gScore)
+//         .field("hScore", &NodeWeight::hScore)
+//         .field("parentId", &NodeWeight::parentId);
+
+//     emscripten::register_vector<NodeWeight>("VectorNodeWeight");
+// }
+
+// EMSCRIPTEN_BINDINGS(my_module)
+// {
+//     class_<AstarPathFinder>("AstarPathFinder")
+//         .constructor<const vector<vector<int>> &>()
+//         .function("getResult", &AstarPathFinder::getResult);
+// }

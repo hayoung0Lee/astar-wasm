@@ -9,18 +9,23 @@
 <body>
     Hello
 
-    <script src="./map_manager.js">
-        console.log("loaded")
-    </script>
+    <!-- <script src="./map_manager.js">
+    </script> -->
+    <!-- <script src="./astar_pathfinder.js">
+    </script> -->
+
+    <script src="./main_test.js"></script>
 
     <script>
-        console.log("test")
         Module.onRuntimeInitialized = _ => {
+            console.log("map_loaded")
             const c = new Module.MapManager(10, 10);
             c.addObstacle(2, 4);
             c.addObstacle(4, 4);
             const m = c.getMap().get(0).get(0);
             console.log("m", m);
+
+            const astar = new Module.AstarPathFinder(m);
         };
     </script>
 

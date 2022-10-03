@@ -17,3 +17,9 @@
 - exmaple: https://github.com/gupnik/WebAssemblyReact/tree/master/Part%20I
 
 - https://neoquest.xyz/blog/c++-to-webassembly-with-react-from-scratch
+
+- web dev: [c part](https://web.dev/emscripting-a-c-library/), [embind](https://web.dev/embind/)
+
+- 2d vector: https://stackoverflow.com/questions/17056628/emscripten-error-when-binding-class-with-2d-double-array
+
+- what is register_vector: https://github.com/emscripten-core/emscripten/issues/6689

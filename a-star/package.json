@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx http-serve ./src"
+    "start": "cd src && npx wasm-server",
+    "compile:map_manager": "emcc -lembind -o ./src/main.js ./src/main.cpp"
   },
   "repository": {
     "type": "git",

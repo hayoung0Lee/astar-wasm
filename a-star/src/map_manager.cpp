@@ -64,21 +64,21 @@ const vector<vector<int>> &MapManager::getMap() const
     return m;
 }
 
-// emcc -lembind -o ./map_manager.js ./map_manager.cpp
-// emcc -lembind -o quick_example.js quick_example.cpp
-// https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html
-EMSCRIPTEN_BINDINGS(stl_wrappers)
-{
-    emscripten::register_vector<int>("VectorInt");
-    emscripten::register_vector<vector<int>>("VectorVectorInt");
-}
+// // emcc -lembind -o ./map_manager.js ./map_manager.cpp
+// // emcc -lembind -o quick_example.js quick_example.cpp
+// // https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html
+// EMSCRIPTEN_BINDINGS(stl_wrappers)
+// {
+//     emscripten::register_vector<int>("VectorInt");
+//     emscripten::register_vector<vector<int>>("VectorVectorInt");
+// }
 
-EMSCRIPTEN_BINDINGS(my_module)
-{
-    class_<MapManager>("MapManager")
-        .constructor<int, int>()
-        .constructor()
-        .function("addObstacle", &MapManager::addObstacle)
-        .function("removeObstacle", &MapManager::removeObstacle)
-        .function("getMap", &MapManager::getMap);
-}
+// EMSCRIPTEN_BINDINGS(my_module)
+// {
+//     class_<MapManager>("MapManager")
+//         .constructor<int, int>()
+//         .constructor()
+//         .function("addObstacle", &MapManager::addObstacle)
+//         .function("removeObstacle", &MapManager::removeObstacle)
+//         .function("getMap", &MapManager::getMap);
+// }
