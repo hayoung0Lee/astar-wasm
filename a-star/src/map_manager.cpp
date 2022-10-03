@@ -1,31 +1,4 @@
-// #include "map_manager.h"
-
-#include <iostream>
-#include <vector>
-#include <emscripten/bind.h>
-
-using namespace emscripten;
-using namespace std;
-
-class MapManager
-{
-private:
-    int r;
-    int c;
-    vector<vector<int>> m;
-
-public:
-    MapManager(int row, int col);
-    MapManager();
-    ~MapManager();
-    void addObstacle(int x, int y);
-    void removeObstacle(int x, int y);
-    void printMap() const;
-    int getRowSize() const;
-    int getColSize() const;
-    const vector<vector<int>> &getMap() const;
-};
-
+#include "map_manager.h"
 /***
  * Map Manager
  ***/
