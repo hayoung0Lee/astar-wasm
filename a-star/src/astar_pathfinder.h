@@ -1,12 +1,12 @@
 #ifndef ASTAR_PATHFINDER_H
 #define ASTAR_PATHFINDER_H
-// #include <emscripten/bind.h>
+#include <emscripten/bind.h>
 #include <iostream>
 #include <vector>
 #include <queue>
 #include <algorithm>
 
-// using namespace emscripten;
+using namespace emscripten;
 using namespace std;
 
 // https://life-with-coding.tistory.com/411

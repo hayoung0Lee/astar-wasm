@@ -23,3 +23,17 @@
 - 2d vector: https://stackoverflow.com/questions/17056628/emscripten-error-when-binding-class-with-2d-double-array
 
 - what is register_vector: https://github.com/emscripten-core/emscripten/issues/6689
+
+```
+CMAKE_TOOLCHAIN_FILE=/Users/hayoung/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake
+// https://gist.github.com/WesThorburn/00c47b267a0e8c8431e06b14997778e4 -> 예시
+```
+
+# Todo
+* regular `make` works.
+* cmake doesn't work.
+    ```
+    file glob
+    아 그리고 비슷한거 그냥 makefile 에서듀 가능함
+    많이 불편하고 나도 기억은 안나는데, add c file recursively 뭐 이래
+    ```

@@ -9,17 +9,17 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-  MapManager curMap(6, 6);
-  curMap.addObstacle(1, 1);
-  curMap.addObstacle(3, 4);
-  curMap.addObstacle(2, 4);
-  curMap.addObstacle(4, 5);
-  curMap.printMap();
+  // MapManager curMap(6, 6);
+  // curMap.addObstacle(1, 1);
+  // curMap.addObstacle(3, 4);
+  // curMap.addObstacle(2, 4);
+  // curMap.addObstacle(4, 5);
+  // curMap.printMap();
 
-  AstarPathFinder astar(curMap.getMap());
-  astar.getResult(true);
-
-  cout << "hello is it printed? " << endl;
+  // AstarPathFinder astar(curMap.getMap());
+  // astar.getResult(true);
+  cout << "Star! " << endl;
+  // cout << "hello is it printed? " << endl;
 }
 
 // emcc -lembind -o ./map_manager.js ./map_manager.cpp

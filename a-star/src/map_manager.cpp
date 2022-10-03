@@ -25,6 +25,14 @@ void MapManager::addObstacle(int x, int y)
     {
         return;
     }
+    if (x == 0 && y == 0)
+    {
+        return;
+    }
+    if (x == r - 1 && y == c - 1)
+    {
+        return;
+    }
     m[x][y] = 1;
 }
 
@@ -67,18 +75,21 @@ const vector<vector<int>> &MapManager::getMap() const
 // // emcc -lembind -o ./map_manager.js ./map_manager.cpp
 // // emcc -lembind -o quick_example.js quick_example.cpp
 // // https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html
-// EMSCRIPTEN_BINDINGS(stl_wrappers)
-// {
-//     emscripten::register_vector<int>("VectorInt");
-//     emscripten::register_vector<vector<int>>("VectorVectorInt");
-// }
+EMSCRIPTEN_BINDINGS(stl_wrappers)
+{
+    emscripten::register_vector<int>("VectorInt");
+    emscripten::register_vector<vector<int>>("VectorVectorInt");
+}
 
-// EMSCRIPTEN_BINDINGS(my_module)
-// {
-//     class_<MapManager>("MapManager")
-//         .constructor<int, int>()
-//         .constructor()
-//         .function("addObstacle", &MapManager::addObstacle)
-//         .function("removeObstacle", &MapManager::removeObstacle)
-//         .function("getMap", &MapManager::getMap);
-// }
+EMSCRIPTEN_BINDINGS(my_module)
+{
+    class_<MapManager>("MapManager")
+        .constructor<int, int>()
+        .constructor()
+        .function("addObstacle", &MapManager::addObstacle)
+        .function("removeObstacle", &MapManager::removeObstacle)
+        .function("printMap", &MapManager::printMap)
+        .function("getMap", &MapManager::getMap);
+}
+
+// emcmake cmake .

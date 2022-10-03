@@ -33,8 +33,12 @@ const vector<NodeWeight> &AstarPathFinder::findPath()
     vector<vector<bool>> visited(r, vector<bool>(c, false));
     visited[0][0] = true;
 
-    while (true)
+    int first = true;
+
+    while (first || oo.size() > 0)
     {
+        first = false; // for first step
+
         NodeWeight current = cc.back();
 
         pair<int, int> cId = current.id;
@@ -101,6 +105,15 @@ const vector<NodeWeight> &AstarPathFinder::getResult(bool cleanMode)
     // Start
     // path.push_back(pair<int, int>(0, 0));
 
+    int r = m.size();
+    int c = m[0].size();
+    NodeWeight last = cc.back();
+    if (!(last.id.first == r - 1 && last.id.second == c - 1))
+    {
+        cout << "not found" << endl;
+        return path;
+    }
+
     if (cleanMode)
     {
         path.push_back(cc.back());
@@ -135,24 +148,21 @@ const vector<NodeWeight> &AstarPathFinder::getResult(bool cleanMode)
     return path;
 }
 
-// EMSCRIPTEN_BINDINGS(stl_wrappers)
-// {
-//     // emscripten::register_vector<int>("VectorInt");
-//     // emscripten::register_vector<vector<int>>("VectorVectorInt");
+EMSCRIPTEN_BINDINGS(stl_wrappers2)
+{
+    value_object<NodeWeight>("NodeWeight")
+        .field("id", &NodeWeight::id)
+        .field("fScore", &NodeWeight::fScore)
+        .field("gScore", &NodeWeight::gScore)
+        .field("hScore", &NodeWeight::hScore)
+        .field("parentId", &NodeWeight::parentId);
 
-//     value_object<NodeWeight>("NodeWeight")
-//         .field("id", &NodeWeight::id)
-//         .field("fScore", &NodeWeight::fScore)
-//         .field("gScore", &NodeWeight::gScore)
-//         .field("hScore", &NodeWeight::hScore)
-//         .field("parentId", &NodeWeight::parentId);
+    emscripten::register_vector<NodeWeight>("VectorNodeWeight");
+}
 
-//     emscripten::register_vector<NodeWeight>("VectorNodeWeight");
-// }
-
-// EMSCRIPTEN_BINDINGS(my_module)
-// {
-//     class_<AstarPathFinder>("AstarPathFinder")
-//         .constructor<const vector<vector<int>> &>()
-//         .function("getResult", &AstarPathFinder::getResult);
-// }
+EMSCRIPTEN_BINDINGS(my_module2)
+{
+    class_<AstarPathFinder>("AstarPathFinder")
+        .constructor<const vector<vector<int>> &>()
+        .function("getResult", &AstarPathFinder::getResult);
+}

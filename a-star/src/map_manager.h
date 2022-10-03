@@ -2,9 +2,8 @@
 #define MAP_MANAGER_H
 #include <iostream>
 #include <vector>
-// #include <emscripten/bind.h>
-
-// using namespace emscripten;
+#include <emscripten/bind.h>
+using namespace emscripten;
 using namespace std;
 
 class MapManager

@@ -14,18 +14,28 @@
     <!-- <script src="./astar_pathfinder.js">
     </script> -->
 
-    <script src="./main_test.js"></script>
+    <script src="./main.js"></script>
 
     <script>
         Module.onRuntimeInitialized = _ => {
             console.log("map_loaded")
-            const c = new Module.MapManager(10, 10);
+            const c = new Module.MapManager(5, 5);
             c.addObstacle(2, 4);
-            c.addObstacle(4, 4);
-            const m = c.getMap().get(0).get(0);
-            console.log("m", m);
+            c.addObstacle(4, 3);
+            c.addObstacle(3, 4);
+            c.addObstacle(1, 2);
+            const m = c.getMap();
 
+
+            console.log("m(0, 0): ", m.get(0).get(0));
+
+            c.printMap();
+
+            console.log("\n\n Get Path");
             const astar = new Module.AstarPathFinder(m);
+            const result = astar.getResult(false);
+
+            console.log("result: ", result.size());
         };
     </script>
 

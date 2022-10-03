@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd src && npx wasm-server",
-    "compile:map_manager": "emcc -lembind -o ./src/main.js ./src/main.cpp"
   },
   "repository": {
     "type": "git",
