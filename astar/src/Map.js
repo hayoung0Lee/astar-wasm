@@ -6,20 +6,27 @@ const Map = ({ map, mapSize, mapCount, route }) => {
     const [c, setC] = useState();
     const [slowArr] = useReturnArraySlowly(route, 1000, mapCount)
 
-    const addObstacle = (a, b) => {
-        c.addObstacle(a, b);
+    const addObstacle = (e, a, b) => {
+        if (e.detail === 1) {
+            c.addObstacle(a, b);
+            console.log("add")
+        }
     }
 
-    const removeObstacle = (a, b) => {
+    const removeObstacle = (e, a, b) => {
+
         c.removeObstacle(a, b);
+
+        console.log("Remove")
     }
+
 
     useEffect(() => {
         setC(map)
     }, [])
 
     useEffect(() => {
-        console.log("slowArr", slowArr)
+        // console.log("slowArr", slowArr)
     }, [slowArr])
 
     return <div style={{ margin: "30px auto", width: mapSize.width, height: mapSize.height }}>
@@ -36,7 +43,11 @@ const Map = ({ map, mapSize, mapCount, route }) => {
                         justifyContent: "center",
                         border: slowArr[i][j] ? "3px solid black" : "1px solid black",
                         backgroundColor: slowArr[i][j] ? "grey" : "#D3D3D3"
-                    }}>
+
+                    }}
+                        onDoubleClick={(e) => removeObstacle(e, i, j)}
+                        onClick={(e) => addObstacle(e, i, j)}
+                    >
                         {i === 0 && j === 0 && "START"}
                         {i === mapCount.height - 1 && j === mapCount.width - 1 && "GOAL"}
                     </div>

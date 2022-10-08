@@ -5,7 +5,7 @@ let intervalId;
 let count = 0;
 
 const useReturnArraySlowly = (arr, time, mapCount) => {
-    const [original] = useState(arr)
+    const [original] = useState(Array.from(Array(arr.size()).keys()).map((i) => arr.get(i).id))
     const [newArr, setNewArr] = useState([])
     const countRef = useRef(1);
     const [timer, setTimer] = useState(1);
@@ -18,18 +18,20 @@ const useReturnArraySlowly = (arr, time, mapCount) => {
                 return countRef.current
             })
         }, time)
+
     }, [])
 
     useEffect(() => {
-        if (newArr.length === original.size()) {
+        if (newArr.length === original.length) {
             clearInterval(intervalId)
         } else {
-            const { x, y } = original.get(newArr.length).id
-            console.log(x, y)
-            setNewArr(prev => [...prev, original.get(prev.length)])
-            setMem(prev => prev.map((arr, pi) =>
+            const newElem = original[newArr.length]
+
+            setNewArr([...newArr, newElem])
+
+            setMem(mem.map((arr, pi) =>
                 arr.map((item, pj) => {
-                    if (pi === x && pj === y) {
+                    if (pi === newElem.x && pj === newElem.y) {
                         return true;
                     } else {
                         return item
@@ -38,6 +40,7 @@ const useReturnArraySlowly = (arr, time, mapCount) => {
             ))
         }
     }, [timer])
+
 
     return [mem]
 }

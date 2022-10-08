@@ -22,6 +22,15 @@ function App() {
       const c = new modules.MapManager(width, height);
       setMapInstance(c)
 
+
+      c.addObstacle(0, 5)
+      c.addObstacle(4, 9)
+      c.addObstacle(4, 4)
+      c.addObstacle(2, 4);
+      c.addObstacle(4, 3);
+      c.addObstacle(3, 4);
+      c.addObstacle(1, 2);
+
       const m = c.getMap();
 
       const astar = new Module.AstarPathFinder(m);
