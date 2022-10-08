@@ -52,3 +52,11 @@ emmake make
 ```
 
 `
+
+## React
+
+- [Using WebAssembly with React](https://koala42.com/using-webassembly-in-your-reactjs-app/)
+
+## 참고자료
+
+-https://github.dev/bobbiec/react-wasm-demo/blob/main/src/locateFile.js

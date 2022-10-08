@@ -1,8 +1,8 @@
 #include <iostream>
 // #include <string.h>
 // #include <cstdlib>
-#include "map_manager.h"
-#include "astar_pathfinder.h"
+// #include "map_manager.h"
+// #include "astar_pathfinder.h"
 // #include <emscripten/bind.h>
 
 using namespace std;
@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 
   // AstarPathFinder astar(curMap.getMap());
   // astar.getResult(true);
-  cout << "Star! " << endl;
+  cout << "Startttt! " << endl;
   // cout << "hello is it printed? " << endl;
 }
 
