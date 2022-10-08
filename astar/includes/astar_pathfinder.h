@@ -10,13 +10,20 @@ using namespace emscripten;
 using namespace std;
 
 // https://life-with-coding.tistory.com/411
+
+struct Point
+{
+    int x;
+    int y;
+};
+
 struct NodeWeight
 {
-    pair<int, int> id;
+    Point id;
     int fScore;
     int gScore;
     int hScore;
-    pair<int, int> parentId;
+    Point parentId;
 };
 
 struct compare
@@ -35,7 +42,7 @@ private:
     priority_queue<NodeWeight, vector<NodeWeight>, compare> oo;
     vector<NodeWeight> path;
     const vector<vector<int>> &m;
-    int getHeuristicValue(pair<int, int> a, pair<int, int> b) const;
+    int getHeuristicValue(Point a, Point b) const;
     const vector<NodeWeight> &findPath();
 
 public:

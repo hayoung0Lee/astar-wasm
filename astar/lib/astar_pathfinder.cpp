@@ -9,17 +9,18 @@ AstarPathFinder::AstarPathFinder(const vector<vector<int>> &mapValue)
 {
 }
 
-int AstarPathFinder::getHeuristicValue(pair<int, int> a,
-                                       pair<int, int> b) const
+int AstarPathFinder::getHeuristicValue(Point a,
+                                       Point b) const
 {
-    return abs(a.first - b.first) + abs(a.second - b.second);
+    return abs(a.x - b.x) + abs(a.y - b.y);
 }
 
 const vector<NodeWeight> &AstarPathFinder::findPath()
 {
     // first node
     NodeWeight n;
-    n.id = pair<int, int>(0, 0);
+    n.id.x = 0;
+    n.id.y = 0;
     n.fScore = 0;
     n.gScore = 0;
     n.hScore = 0;
@@ -41,10 +42,10 @@ const vector<NodeWeight> &AstarPathFinder::findPath()
 
         NodeWeight current = cc.back();
 
-        pair<int, int> cId = current.id;
+        Point cId = current.id;
         int c_gscore = current.gScore;
 
-        if (cId.first == r - 1 && cId.second == c - 1)
+        if (cId.x == r - 1 && cId.y == c - 1)
         {
             break;
         }
@@ -53,8 +54,8 @@ const vector<NodeWeight> &AstarPathFinder::findPath()
 
         for (int i = 0; i < 4; i++)
         {
-            int nx = cId.first + dx[i];
-            int ny = cId.second + dy[i];
+            int nx = cId.x + dx[i];
+            int ny = cId.y + dy[i];
 
             if (nx < 0 || nx >= r || ny < 0 || ny >= c)
             {
@@ -76,10 +77,16 @@ const vector<NodeWeight> &AstarPathFinder::findPath()
             }
 
             NodeWeight nn;
-            nn.id = pair<int, int>(nx, ny);
+            nn.id.x = nx;
+            nn.id.y = ny;
 
             nn.gScore = next_gscore;
-            nn.hScore = getHeuristicValue(nn.id, pair<int, int>(r - 1, c - 1));
+
+            Point next;
+            next.x = r - 1;
+            next.y = c - 1;
+
+            nn.hScore = getHeuristicValue(nn.id, next);
 
             nn.fScore = nn.gScore + nn.gScore;
 
@@ -108,7 +115,7 @@ const vector<NodeWeight> &AstarPathFinder::getResult(bool cleanMode)
     int r = m.size();
     int c = m[0].size();
     NodeWeight last = cc.back();
-    if (!(last.id.first == r - 1 && last.id.second == c - 1))
+    if (!(last.id.x == r - 1 && last.id.y == c - 1))
     {
         cout << "not found" << endl;
         return path;
@@ -117,13 +124,13 @@ const vector<NodeWeight> &AstarPathFinder::getResult(bool cleanMode)
     if (cleanMode)
     {
         path.push_back(cc.back());
-        pair<int, int> parentId = cc.back().parentId;
+        Point parentId = cc.back().parentId;
 
         for (int i = cc.size() - 2; i >= 0; i--)
         {
-            pair<int, int> currentId = cc[i].id;
+            Point currentId = cc[i].id;
 
-            if (currentId.first == parentId.first && currentId.second == parentId.second)
+            if (currentId.x == parentId.x && currentId.y == parentId.y)
             {
                 path.push_back(cc[i]);
                 parentId = cc[i].parentId;
@@ -142,7 +149,7 @@ const vector<NodeWeight> &AstarPathFinder::getResult(bool cleanMode)
 
     for (int i = 0; i < path.size(); i++)
     {
-        cout << path[i].id.first << " " << path[i].id.second << endl;
+        cout << path[i].id.x << " " << path[i].id.y << endl;
     }
 
     return path;
@@ -150,6 +157,10 @@ const vector<NodeWeight> &AstarPathFinder::getResult(bool cleanMode)
 
 EMSCRIPTEN_BINDINGS(stl_wrappers2)
 {
+    value_object<Point>("Point")
+        .field("x", &Point::x)
+        .field("y", &Point::y);
+
     value_object<NodeWeight>("NodeWeight")
         .field("id", &NodeWeight::id)
         .field("fScore", &NodeWeight::fScore)

@@ -14,21 +14,30 @@ function App() {
   const [mapInstance, setMapInstance] = useState()
   const [width, setWidth] = useState(10)
   const [height, setHeight] = useState(10)
+  const [route, setRoute] = useState()
 
+  const [init, setInit] = useState(true)
   useEffect(() => {
-    if (!loading) {
+    if (!loading && init) {
       const c = new modules.MapManager(width, height);
       setMapInstance(c)
+
+      const m = c.getMap();
+
+      const astar = new Module.AstarPathFinder(m);
+      const result = astar.getResult(true);
+      setRoute(result)
+      setInit(false)
     }
   }, [loading])
 
-  if (loading) {
+  if (loading || !mapInstance || !route) {
     return <div>Loading wasm</div>
   }
 
   return (
     <div className="App">
-      <Map map={mapInstance} mapSize={{ width: MAP_WIDTH, height: MAP_HEIGHT }} mapCount={{ width, height }} />
+      <Map route={route} map={mapInstance} mapSize={{ width: MAP_WIDTH, height: MAP_HEIGHT }} mapCount={{ width, height }} />
     </div>
   );
 }
