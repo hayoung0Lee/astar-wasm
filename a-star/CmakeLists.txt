@@ -9,7 +9,8 @@ project(
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable (program src/main.cpp src/map_manager.cpp src/astar_pathfinder.cpp)
+add_executable (program lib/main.cpp lib/map_manager.cpp lib/astar_pathfinder.cpp)
+target_include_directories(program PUBLIC ${CMAKE_SOURCE_DIR}/includes)
 
 set_target_properties(program PROPERTIES LINK_FLAGS "--bind -sLLD_REPORT_UNDEFINED")
-set_target_properties(program PROPERTIES OUTPUT_NAME "main.js")
+set_target_properties(program PROPERTIES OUTPUT_NAME "${CMAKE_SOURCE_DIR}/src/main")
