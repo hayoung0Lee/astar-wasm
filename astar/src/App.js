@@ -25,7 +25,9 @@ function App() {
 
       c.addObstacle(0, 5)
       c.addObstacle(4, 9)
+      c.addObstacle(4, 8)
       c.addObstacle(4, 4)
+      c.addObstacle(4, 5)
       c.addObstacle(2, 4);
       c.addObstacle(4, 3);
       c.addObstacle(3, 4);
@@ -34,7 +36,7 @@ function App() {
       const m = c.getMap();
 
       const astar = new Module.AstarPathFinder(m);
-      const result = astar.getResult(true);
+      const result = astar.getResult(false);
       setRoute(result)
       setInit(false)
     }
