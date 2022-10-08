@@ -30,10 +30,25 @@ CMAKE_TOOLCHAIN_FILE=/Users/hayoung/emsdk/upstream/emscripten/cmake/Modules/Plat
 ```
 
 # Todo
-* regular `make` works.
-* cmake doesn't work.
-    ```
-    file glob
-    아 그리고 비슷한거 그냥 makefile 에서듀 가능함
-    많이 불편하고 나도 기억은 안나는데, add c file recursively 뭐 이래
-    ```
+
+- regular `make main` works.
+- cmake doesn't work.
+  ```
+  file glob
+  아 그리고 비슷한거 그냥 makefile 에서듀 가능함
+  많이 불편하고 나도 기억은 안나는데, add c file recursively 뭐 이래
+  ```
+
+### How to run
+
+```
+CMAKE_TOOLCHAIN_FILE=/Users/hayoung/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake
+
+<!-- https://emscripten.org/docs/compiling/Building-Projects.html -->
+
+cd build
+emcmake cmake ..
+emmake make
+```
+
+`
