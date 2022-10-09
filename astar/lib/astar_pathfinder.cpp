@@ -15,8 +15,16 @@ int AstarPathFinder::getHeuristicValue(Point a,
     return abs(a.x - b.x) + abs(a.y - b.y);
 }
 
-const vector<NodeWeight> &AstarPathFinder::findPath()
+const vector<NodeWeight> AstarPathFinder::findPath()
 {
+    int r = m.size();
+    int c = m[0].size();
+
+    // https://kbj96.tistory.com/15
+    priority_queue<NodeWeight, vector<NodeWeight>, compare> open_list; // saves condidates
+    vector<NodeWeight> close_list;                                     // saves processed node
+    vector<vector<bool>> visited(r, vector<bool>(c, false));
+
     // first node
     NodeWeight n;
     n.id.x = 0;
@@ -24,33 +32,31 @@ const vector<NodeWeight> &AstarPathFinder::findPath()
     n.fScore = 0;
     n.gScore = 0;
     n.hScore = 0;
-    cc.push_back(n);
+    open_list.push(n);
+    visited[0][0] = true;
 
-    int r = m.size();
-    int c = m[0].size();
     int dx[4] = {0, 1, 0, -1};
     int dy[4] = {1, 0, -1, 0};
 
-    vector<vector<bool>> visited(r, vector<bool>(c, false));
-    visited[0][0] = true;
+    Point destination;
+    destination.x = r - 1;
+    destination.y = c - 1;
 
-    int first = true;
-
-    while (first || oo.size() > 0)
+    while (open_list.size() > 0)
     {
-        first = false; // for first step
+        close_list.push_back(open_list.top());
+        open_list.pop();
 
-        NodeWeight current = cc.back();
+        NodeWeight current = close_list.back();
 
+        // break because it reached to the destination
         Point cId = current.id;
-        int c_gscore = current.gScore;
-
         if (cId.x == r - 1 && cId.y == c - 1)
         {
             break;
         }
 
-        int next_gscore = c_gscore + 1;
+        int next_gscore = current.gScore + 1;
 
         for (int i = 0; i < 4; i++)
         {
@@ -76,64 +82,52 @@ const vector<NodeWeight> &AstarPathFinder::findPath()
                 continue;
             }
 
-            NodeWeight nn;
-            nn.id.x = nx;
-            nn.id.y = ny;
-
-            nn.gScore = next_gscore;
-
-            Point next;
-            next.x = r - 1;
-            next.y = c - 1;
-
-            nn.hScore = getHeuristicValue(nn.id, next);
-
-            nn.fScore = nn.gScore + nn.gScore;
-
-            nn.parentId = current.id;
-            oo.push(nn); // add to priority queue
-
+            NodeWeight next;
+            next.id.x = nx;
+            next.id.y = ny;
+            next.gScore = next_gscore;
+            next.hScore = getHeuristicValue(next.id, destination);
+            next.fScore = next.gScore + next.gScore;
+            next.parentId = current.id;
+            open_list.push(next); // add to priority queue
             visited[nx][ny] = true;
         }
-
-        // getSomething out of oo and put in in cc.
-        cc.push_back(oo.top());
-        oo.pop();
     }
 
-    return cc;
+    return close_list;
 }
 
 const vector<NodeWeight> &AstarPathFinder::getResult(bool cleanMode)
 {
-    findPath();
-
-    // loop cc and get path
-    // Start
-    // path.push_back(pair<int, int>(0, 0));
+    const vector<NodeWeight> &close_list = findPath();
 
     int r = m.size();
     int c = m[0].size();
-    NodeWeight last = cc.back();
+    NodeWeight last = close_list.back();
     if (!(last.id.x == r - 1 && last.id.y == c - 1))
     {
         cout << "not found" << endl;
+
+        for (int i = 0; i < close_list.size(); i++)
+        {
+            cout << close_list[i].id.x << " " << close_list[i].id.y << endl;
+        }
         return path;
     }
 
     if (cleanMode)
     {
-        path.push_back(cc.back());
-        Point parentId = cc.back().parentId;
+        path.push_back(close_list.back());
+        Point parentId = close_list.back().parentId;
 
-        for (int i = cc.size() - 2; i >= 0; i--)
+        for (int i = close_list.size() - 2; i >= 0; i--)
         {
-            Point currentId = cc[i].id;
+            Point currentId = close_list[i].id;
 
             if (currentId.x == parentId.x && currentId.y == parentId.y)
             {
-                path.push_back(cc[i]);
-                parentId = cc[i].parentId;
+                path.push_back(close_list[i]);
+                parentId = close_list[i].parentId;
             }
         }
         reverse(path.begin(), path.end());
@@ -141,9 +135,9 @@ const vector<NodeWeight> &AstarPathFinder::getResult(bool cleanMode)
     else
     {
         // add every thing -> how it calcualted the path
-        for (int i = 0; i < cc.size(); i++)
+        for (int i = 0; i < close_list.size(); i++)
         {
-            path.push_back(cc[i]);
+            path.push_back(close_list[i]);
         }
     }
 

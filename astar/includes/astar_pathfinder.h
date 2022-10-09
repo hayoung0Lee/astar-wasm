@@ -37,13 +37,10 @@ struct compare
 class AstarPathFinder
 {
 private:
-    vector<NodeWeight> cc;
-    // https://kbj96.tistory.com/15
-    priority_queue<NodeWeight, vector<NodeWeight>, compare> oo;
     vector<NodeWeight> path;
     const vector<vector<int>> &m;
     int getHeuristicValue(Point a, Point b) const;
-    const vector<NodeWeight> &findPath();
+    const vector<NodeWeight> findPath();
 
 public:
     AstarPathFinder(const vector<vector<int>> &mapValue);
