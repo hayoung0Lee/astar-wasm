@@ -20,10 +20,18 @@ const vector<NodeWeight> AstarPathFinder::findPath()
     int r = m.size();
     int c = m[0].size();
 
-    // https://kbj96.tistory.com/15
+    // http://www.gisdeveloper.co.kr/?p=3897
+    // https://kiyongpro.github.io/algorithm/AStarPathFinding/
     priority_queue<NodeWeight, vector<NodeWeight>, compare> open_list; // saves condidates
     vector<NodeWeight> close_list;                                     // saves processed node
-    vector<vector<bool>> visited(r, vector<bool>(c, false));
+    NodeWeight default_value;
+    default_value.id.x = -1;
+    default_value.id.y = -1;
+    default_value.fScore = -1;
+    default_value.gScore = -1;
+    default_value.hScore = -1;
+    vector<vector<NodeWeight>> open_list_map(r, vector<NodeWeight>(c, default_value));
+    vector<vector<bool>> closed_map(r, vector<bool>(c, false));
 
     // first node
     NodeWeight n;
@@ -33,7 +41,8 @@ const vector<NodeWeight> AstarPathFinder::findPath()
     n.gScore = 0;
     n.hScore = 0;
     open_list.push(n);
-    visited[0][0] = true;
+    open_list_map[0][0] = n;
+    // visited[0][0] = true;
 
     int dx[4] = {0, 1, 0, -1};
     int dy[4] = {1, 0, -1, 0};
@@ -44,11 +53,12 @@ const vector<NodeWeight> AstarPathFinder::findPath()
 
     while (open_list.size() > 0)
     {
-        close_list.push_back(open_list.top());
+        NodeWeight current = open_list.top();
         open_list.pop();
+        close_list.push_back(current);
+        closed_map[current.id.x][current.id.y] = true;
 
-        NodeWeight current = close_list.back();
-
+        cout << "current" << current.id.x << " " << current.id.y << endl;
         // break because it reached to the destination
         Point cId = current.id;
         if (cId.x == r - 1 && cId.y == c - 1)
@@ -74,14 +84,13 @@ const vector<NodeWeight> AstarPathFinder::findPath()
                 continue;
             }
 
-            if (visited[nx][ny])
+            if (closed_map[nx][ny])
             {
-                // Its weight is calcualted already by other node.
-                // And because I am searching nodes in bfs way,
-                // g value is always bigger or same if there was a previous node that accessed it here.
+                // it is alread in closed list
                 continue;
             }
 
+            // New Item to Open List
             NodeWeight next;
             next.id.x = nx;
             next.id.y = ny;
@@ -89,8 +98,12 @@ const vector<NodeWeight> AstarPathFinder::findPath()
             next.hScore = getHeuristicValue(next.id, destination);
             next.fScore = next.gScore + next.gScore;
             next.parentId = current.id;
-            open_list.push(next); // add to priority queue
-            visited[nx][ny] = true;
+            if (open_list_map[nx][ny].id.x == -1 || open_list_map[nx][ny].fScore > next.fScore)
+            {
+                // new to open list, or next has lower fScore
+                open_list.push(next); // add to priority queue
+                open_list_map[nx][ny] = next;
+            }
         }
     }
 

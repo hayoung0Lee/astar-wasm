@@ -25,7 +25,7 @@ function App() {
   const handleRoute = () => {
     const m = mapInstance.getMap();
     const astar = new modules.AstarPathFinder(m);
-    const result = astar.getResult(true);
+    const result = astar.getResult(false);
     setRoute(result)
   }
 
