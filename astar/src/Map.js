@@ -61,10 +61,11 @@ const Map = ({ mapInstance, mapProps, route }) => {
                             }}
                             onDoubleClick={(e) => removeObstacle(e, i, j)}
                             onClick={(e) => addObstacle(e, i, j)}
+
                         >
                             {i === 0 && j === 0 && "START"}
                             {i === rowCount - 1 && j === colCount - 1 && "GOAL"}
-                            {!(i === 0 && j === 0) && !(i === rowCount - 1 && j === colCount - 1) && "click"}
+                            {!(i === 0 && j === 0) && !(i === rowCount - 1 && j === colCount - 1) && `(${i}, ${j})`}
                         </MapItem>
                     }
 
