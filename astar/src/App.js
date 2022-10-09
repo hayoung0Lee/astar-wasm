@@ -12,43 +12,49 @@ const MAP_HEIGHT = 750
 function App() {
   const [loading, modules] = useLoadWasmModule(`${process.env.PUBLIC_URL}/static/js/main.js`, ["MapManager", "AstarPathFinder"])
   const [mapInstance, setMapInstance] = useState()
-  const [width, setWidth] = useState(10)
-  const [height, setHeight] = useState(10)
+  const [rowCount, setRowCount] = useState(10)
+  const [colCount, setColCount] = useState(10)
   const [route, setRoute] = useState()
 
-  const [init, setInit] = useState(true)
   useEffect(() => {
-    if (!loading && init) {
-      const c = new modules.MapManager(width, height);
-      setMapInstance(c)
-
-
-      c.addObstacle(0, 5)
-      c.addObstacle(4, 9)
-      c.addObstacle(4, 8)
-      c.addObstacle(4, 4)
-      c.addObstacle(4, 5)
-      c.addObstacle(2, 4);
-      c.addObstacle(4, 3);
-      c.addObstacle(3, 4);
-      c.addObstacle(1, 2);
-
-      const m = c.getMap();
-
-      const astar = new Module.AstarPathFinder(m);
-      const result = astar.getResult(false);
-      setRoute(result)
-      setInit(false)
+    if (!loading) {
+      setMapInstance(new modules.MapManager(colCount, rowCount))
     }
   }, [loading])
 
-  if (loading || !mapInstance || !route) {
+  const handleRoute = () => {
+    const m = mapInstance.getMap();
+    const astar = new modules.AstarPathFinder(m);
+    const result = astar.getResult(false);
+
+    console.log("result", result)
+    setRoute(result)
+  }
+
+  if (loading || !mapInstance) {
     return <div>Loading wasm</div>
   }
 
   return (
-    <div className="App">
-      <Map route={route} map={mapInstance} mapSize={{ width: MAP_WIDTH, height: MAP_HEIGHT }} mapCount={{ width, height }} />
+    <div className="App" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <Map
+        mapInstance={mapInstance}
+        mapProps={{
+          width: MAP_WIDTH,
+          height: MAP_HEIGHT,
+          rowCount: rowCount,
+          colCount: colCount
+        }}
+        route={route}
+      />
+      <button style={{
+        width: 100,
+        height: 70
+      }}
+        onClick={handleRoute}
+      >
+        Start
+      </button>
     </div>
   );
 }

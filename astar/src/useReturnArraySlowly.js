@@ -2,47 +2,56 @@
 import { useState, useEffect, useRef } from "react";
 
 let intervalId;
-let count = 0;
 
-const useReturnArraySlowly = (arr, time, mapCount) => {
-    const [original] = useState(Array.from(Array(arr.size()).keys()).map((i) => arr.get(i).id))
-    const [newArr, setNewArr] = useState([])
-    const countRef = useRef(1);
+const useReturnArraySlowly = (time, { rowCount, colCount }) => {
+    const [initialRoute, setInitialRoute] = useState([])
+    const [slowRoute, setSlowRoute] = useState([])
     const [timer, setTimer] = useState(1);
-    const [mem, setMem] = useState(Array(mapCount.height).fill(0).map(() => Array(mapCount.width).fill(false)))
+    const [slowArr, setSlowArr] = useState(Array(rowCount).fill(0).map(() => Array(colCount).fill(false)))
+    const countRef = useRef(1);
 
     useEffect(() => {
-        intervalId = setInterval(() => {
-            setTimer(prev => {
-                countRef.current = prev + 1
-                return countRef.current
-            })
-        }, time)
-
-    }, [])
-
-    useEffect(() => {
-        if (newArr.length === original.length) {
-            clearInterval(intervalId)
-        } else {
-            const newElem = original[newArr.length]
-
-            setNewArr([...newArr, newElem])
-
-            setMem(mem.map((arr, pi) =>
-                arr.map((item, pj) => {
-                    if (pi === newElem.x && pj === newElem.y) {
-                        return true;
-                    } else {
-                        return item
-                    }
+        if (initialRoute) {
+            if (intervalId) {
+                clearInterval(intervalId)
+            }
+            intervalId = setInterval(() => {
+                setTimer(prev => {
+                    // countRef.current = prev + 1
+                    // return countRef.current
+                    return prev + 1
                 })
-            ))
+            }, time)
+        }
+    }, [initialRoute, slowRoute])
+
+    useEffect(() => {
+        if (initialRoute) {
+            if (slowRoute.length === initialRoute.length) {
+                clearInterval(intervalId)
+            } else {
+                const newElem = initialRoute[slowRoute.length]
+                setSlowRoute([...slowRoute, newElem])
+                setSlowArr(slowArr.map((arr, pi) =>
+                    arr.map((item, pj) => {
+                        if (pi === newElem.x && pj === newElem.y) {
+                            return true;
+                        } else {
+                            return item
+                        }
+                    })
+                ))
+            }
         }
     }, [timer])
 
+    const initSlowArr = (routeArr) => {
+        setSlowRoute([])
+        setSlowArr(Array(rowCount).fill(0).map(() => Array(colCount).fill(false)))
+        setInitialRoute(routeArr)
+    }
 
-    return [mem]
+    return [slowArr, initSlowArr]
 }
 
 export default useReturnArraySlowly;
