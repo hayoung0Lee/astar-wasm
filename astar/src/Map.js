@@ -10,8 +10,7 @@ const Map = ({ mapInstance, mapProps, route }) => {
         colCount
     } = mapProps;
 
-
-    const [slowArr, initSlowArr] = useReturnArraySlowly(2000, {
+    const [slowArr, initSlowArr, clearSlowArr] = useReturnArraySlowly(2000, {
         colCount: mapProps.colCount,
         rowCount: mapProps.rowCount,
     })
@@ -35,14 +34,13 @@ const Map = ({ mapInstance, mapProps, route }) => {
             const newArr = Array.from(Array(route.size()).keys()).map((i) => route.get(i).id)
             setRouteArr(newArr)
             initSlowArr(newArr)
+        } else {
+            setRouteArr([])
+            clearSlowArr()
         }
     }, [route])
 
-    useEffect(() => {
-        // console.log("slowArr", slowArr)
-    }, [slowArr])
-
-    return <div style={{ margin: "30px auto", width: width, height: height }}>
+    return <div style={{ width: width, height: height }}>
         {Array.from(Array(rowCount).keys()).map((i) => {
             return <div key={`height_${i}`} style={{
                 display: "flex"

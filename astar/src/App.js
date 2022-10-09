@@ -6,7 +6,7 @@ import Map from './Map';
 
 
 const MAP_WIDTH = 800
-const MAP_HEIGHT = 750
+const MAP_HEIGHT = 700
 
 
 function App() {
@@ -26,9 +26,11 @@ function App() {
     const m = mapInstance.getMap();
     const astar = new modules.AstarPathFinder(m);
     const result = astar.getResult(false);
-
-    console.log("result", result)
     setRoute(result)
+  }
+
+  const clearRoute = () => {
+    setRoute()
   }
 
   if (loading || !mapInstance) {
@@ -36,7 +38,7 @@ function App() {
   }
 
   return (
-    <div className="App" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div className="App" style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 20 }}>
       <Map
         mapInstance={mapInstance}
         mapProps={{
@@ -47,14 +49,28 @@ function App() {
         }}
         route={route}
       />
-      <button style={{
-        width: 100,
-        height: 70
-      }}
-        onClick={handleRoute}
-      >
-        Start
-      </button>
+      <div style={{
+        display: "flex",
+        gap: 20,
+        marginTop: 10
+      }}>
+        <button style={{
+          width: 100,
+          height: 70
+        }}
+          onClick={handleRoute}
+        >
+          Start
+        </button>
+        <button style={{
+          width: 100,
+          height: 70
+        }}
+          onClick={clearRoute}
+        >
+          Clear
+        </button>
+      </div>
     </div>
   );
 }

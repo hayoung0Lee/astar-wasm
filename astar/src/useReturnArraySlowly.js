@@ -8,7 +8,6 @@ const useReturnArraySlowly = (time, { rowCount, colCount }) => {
     const [slowRoute, setSlowRoute] = useState([])
     const [timer, setTimer] = useState(1);
     const [slowArr, setSlowArr] = useState(Array(rowCount).fill(0).map(() => Array(colCount).fill(false)))
-    const countRef = useRef(1);
 
     useEffect(() => {
         if (initialRoute) {
@@ -17,8 +16,6 @@ const useReturnArraySlowly = (time, { rowCount, colCount }) => {
             }
             intervalId = setInterval(() => {
                 setTimer(prev => {
-                    // countRef.current = prev + 1
-                    // return countRef.current
                     return prev + 1
                 })
             }, time)
@@ -51,7 +48,7 @@ const useReturnArraySlowly = (time, { rowCount, colCount }) => {
         setInitialRoute(routeArr)
     }
 
-    return [slowArr, initSlowArr]
+    return [slowArr, initSlowArr, setInitialRoute]
 }
 
 export default useReturnArraySlowly;
