@@ -57,14 +57,9 @@ void MapManager::printMap() const
     }
 }
 
-int MapManager::getRowSize() const
+bool MapManager::mapStatus(int x, int y)
 {
-    return r;
-}
-
-int MapManager::getColSize() const
-{
-    return c;
+    return m[x][y] == 1;
 }
 
 const vector<vector<int>> &MapManager::getMap() const
@@ -89,6 +84,7 @@ EMSCRIPTEN_BINDINGS(my_module)
         .function("addObstacle", &MapManager::addObstacle)
         .function("removeObstacle", &MapManager::removeObstacle)
         .function("printMap", &MapManager::printMap)
+        .function("mapStatus", &MapManager::mapStatus)
         .function("getMap", &MapManager::getMap);
 }
 

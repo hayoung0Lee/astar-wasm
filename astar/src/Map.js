@@ -35,6 +35,24 @@ const Map = ({ map, mapSize, mapCount, route }) => {
                 display: "flex"
             }}>
                 {Array.from(Array(mapCount.width).keys()).map((j) => {
+                    if (map.mapStatus(i, j)) {
+                        return <div key={`width_${j}`} style={{
+                            width: `${mapSize.width / mapCount.width}px`,
+                            height: `${mapSize.height / mapCount.height}px`,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "black"
+
+                        }}
+                            onDoubleClick={(e) => removeObstacle(e, i, j)}
+                            onClick={(e) => addObstacle(e, i, j)}
+                        >
+                            {i === 0 && j === 0 && "START"}
+                            {i === mapCount.height - 1 && j === mapCount.width - 1 && "GOAL"}
+                        </div>
+                    }
+
                     return <div key={`width_${j}`} style={{
                         width: `${mapSize.width / mapCount.width}px`,
                         height: `${mapSize.height / mapCount.height}px`,

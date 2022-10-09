@@ -20,8 +20,7 @@ public:
     void addObstacle(int x, int y);
     void removeObstacle(int x, int y);
     void printMap() const;
-    int getRowSize() const;
-    int getColSize() const;
+    bool mapStatus(int x, int y);
     const vector<vector<int>> &getMap() const;
 };
 
