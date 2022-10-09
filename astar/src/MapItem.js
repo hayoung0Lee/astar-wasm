@@ -1,4 +1,4 @@
-const MapItem = ({ mapProps, style, props, children }) => {
+const MapItem = ({ mapProps, style, children, ...props }) => {
     return <div style={{
         width: `${mapProps.width / mapProps.colCount}px`,
         height: `${mapProps.height / mapProps.rowCount}px`,
