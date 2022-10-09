@@ -10,7 +10,7 @@ const Map = ({ mapInstance, mapProps, route }) => {
         colCount
     } = mapProps;
 
-    const [slowArr, initSlowArr, clearSlowArr] = useReturnArraySlowly(2000, {
+    const [slowArr, initSlowArr, clearSlowArr] = useReturnArraySlowly(1000, {
         colCount: mapProps.colCount,
         rowCount: mapProps.rowCount,
     })

@@ -48,7 +48,15 @@ const useReturnArraySlowly = (time, { rowCount, colCount }) => {
         setInitialRoute(routeArr)
     }
 
-    return [slowArr, initSlowArr, setInitialRoute]
+    const clearSlowArr = () => {
+        if (intervalId) {
+            clearInterval(intervalId)
+        }
+        setSlowArr(Array(rowCount).fill(0).map(() => Array(colCount).fill(false)))
+        setInitialRoute([])
+        setSlowRoute([])
+    }
+    return [slowArr, initSlowArr, clearSlowArr]
 }
 
 export default useReturnArraySlowly;
