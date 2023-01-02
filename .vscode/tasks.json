@@ -1,0 +1,110 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "cppbuild",
+      "label": "C/C++: clang++ build active file",
+      "command": "/usr/bin/clang++",
+      "args": [
+        "-fcolor-diagnostics",
+        "-fansi-escape-codes",
+        "-std=c++17",
+        "-g",
+        // "${file}",
+        "${fileDirname}/*.cpp",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": ["$gcc"],
+      "group": "build",
+      "detail": "compiler: /usr/bin/clang++"
+    },
+    {
+      "type": "cppbuild",
+      "label": "wasm build",
+      "command": "/Users/hayoung/emsdk/upstream/emscripten/emcc",
+      "args": [
+        "-fcolor-diagnostics",
+        "-fansi-escape-codes",
+        "-std=c++17",
+        "-g",
+        // "${file}",
+        "${fileDirname}/*.cpp",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.js"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": ["$gcc"],
+      "group": "build",
+      "detail": "compiler: /Users/hayoung/emsdk/upstream/emscripten/emcc"
+    },
+    {
+      "type": "cppbuild",
+      "label": "wasm build with html",
+      "command": "/Users/hayoung/emsdk/upstream/emscripten/emcc",
+      "args": [
+        "-fcolor-diagnostics",
+        "-fansi-escape-codes",
+        // "-g",
+        // "${file}",
+        "-std=c++17",
+        "-g",
+        // "${file}",
+        "${fileDirname}/*.cpp",
+        "-o",
+        "${fileDirname}/../build/index.html",
+        "--shell-file",
+        "${fileDirname}/../front/index.html",
+        // "-s NO_EXIT_RUNTIME=1 -s \"EXPORTED_RUNTIME_METHODS=['ccall']\""
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": ["$gcc"],
+      "group": "build",
+      "detail": "compiler: /Users/hayoung/emsdk/upstream/emscripten/emcc"
+    },
+    {
+      "type": "cppbuild",
+      "label": "create bindings for map",
+      "command": "/Users/hayoung/emsdk/upstream/emscripten/emcc",
+      "args": [
+        "-lembind",
+        // "-O3",
+        "${fileDirname}/map_manager_bindings.cpp",
+        "-Icpp/",
+        "*.cpp ",
+        "-o",
+        "${fileDirname}/MapManager.js",
+        "--shell-file",
+        "${fileDirname}/index.html",
+        // "-s",
+        // "WASM=1",
+        // "-s",
+        // "MODULARIZE=1",
+        //  "-s", "EXPORT_ES6=1",
+        //  "-s", "ENVIRONMENT=web",
+        // "-sASSERTIONS",
+        // "-s",
+        // "WASM=0",
+        // "-s",
+        // "ENVIRONMENT=web",
+        // "-s",
+        // "MODULARIZE=1",
+        // "-s",
+        // "\"EXPORT_NAME='createPingModule'\""
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": ["$gcc"],
+      "group": "build",
+      "detail": "compiler: /Users/hayoung/emsdk/upstream/emscripten/emcc"
+    },
+  ]
+}
